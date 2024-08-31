@@ -6,7 +6,7 @@
 /*   By: nkarpilo <nkarpilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 14:04:18 by nkarpilo          #+#    #+#             */
-/*   Updated: 2024/08/17 14:22:09 by nkarpilo         ###   ########.fr       */
+/*   Updated: 2024/08/31 15:24:17 by nkarpilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ bool	allocate_threads(t_table *table)
 	return (true);
 }
 
-/**
- * Allocate table's arrays.
- */
 bool	allocate(t_table *table)
 {
 	if (!allocate_mutexes(&(table->mtx_forks), table->size))

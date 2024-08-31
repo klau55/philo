@@ -6,7 +6,7 @@
 /*   By: nkarpilo <nkarpilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:43:26 by nkarpilo          #+#    #+#             */
-/*   Updated: 2024/08/31 15:02:26 by nkarpilo         ###   ########.fr       */
+/*   Updated: 2024/08/31 15:26:50 by nkarpilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	is_dead(t_philo *philo)
 	last_meal_time = philo->last_meal_time;
 	if (last_meal_time == 0)
 		last_meal_time = philo->table->init_time;
-	if (get_current_time() >= last_meal_time + philo->table->die)
+	if (get_current_time() - last_meal_time >= philo->table->die)
 	{
 		printf("%ld\t%ld\t%s", get_current_time() - philo->table->init_time \
 		, philo->id + 1, "has died\n");
