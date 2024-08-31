@@ -6,7 +6,7 @@
 /*   By: nkarpilo <nkarpilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:43:26 by nkarpilo          #+#    #+#             */
-/*   Updated: 2024/08/17 14:02:42 by nkarpilo         ###   ########.fr       */
+/*   Updated: 2024/08/31 15:02:26 by nkarpilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	is_dead(t_philo *philo)
 {
 	long	last_meal_time;
 
-	last_meal_time = atomic_get(philo->mtx_philo, &philo->last_meal_time);
+	last_meal_time = philo->last_meal_time;
 	if (last_meal_time == 0)
 		last_meal_time = philo->table->init_time;
 	if (get_current_time() >= last_meal_time + philo->table->die)
@@ -32,13 +32,13 @@ static void	is_dead(t_philo *philo)
 static int	is_game_over(t_philo *philo)
 {
 	pthread_mutex_lock(philo->table->mtx_act);
-	is_dead(philo);
 	if (philo->table->satiation_count == philo->table->size)
 	{
 		philo->table->game_over = 1;
 		pthread_mutex_unlock(philo->table->mtx_act);
 		return (1);
 	}
+	is_dead(philo);
 	pthread_mutex_unlock(philo->table->mtx_act);
 	return (philo->table->game_over);
 }
@@ -49,9 +49,7 @@ void	*monitoring(void *arg)
 	size_t		i;
 
 	table = (t_table *)arg;
-	while (atomic_get(table->mtx_act, &table->init_time) == 0)
-		continue ;
-	if (table->init_time == -1)
+	if (atomic_get(table->mtx_act, &table->init_time) == -1)
 		return (NULL);
 	ft_usleep(30, table);
 	while (true)

@@ -6,7 +6,7 @@
 /*   By: nkarpilo <nkarpilo@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/17 13:42:09 by nkarpilo          #+#    #+#             */
-/*   Updated: 2024/08/17 13:53:36 by nkarpilo         ###   ########.fr       */
+/*   Updated: 2024/08/31 15:06:18 by nkarpilo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	join_pthreads(t_table *table, int size)
 bool	init(t_table *table)
 {
 	size_t	i;
-
+	pthread_mutex_lock(table->mtx_act);
 	if (pthread_create(table->monitor, NULL, monitoring, (void *) table) != 0)
 		return (false);
 	i = 0;
@@ -43,6 +43,7 @@ bool	init(t_table *table)
 		i++;
 	}
 	set_init_time(table, i);
+	pthread_mutex_unlock(table->mtx_act);
 	join_pthreads(table, i);
 	return (i == table->size);
 }
