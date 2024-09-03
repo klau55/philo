@@ -38,7 +38,7 @@ static	long	has_no_more_than_8_digits(char *str)
 	{
 		if (!ft_isdigit((unsigned char)*str))
 		{
-			ft_putstr_fd("Error: Non-numeric of negative character found.\n", 2);
+			ft_putstr_fd("Error: Non-numeric or negative character found.\n", 2);
 			exit(1);
 		}
 		str++;

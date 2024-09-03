@@ -54,13 +54,13 @@ typedef struct s_table
 	pthread_t		*threads;
 }	t_table;
 
+/* main.c */
 bool	is_args_valid(int argc, char **argv, t_table *table);
 
+/* init.c */
 bool	init(t_table *table);
 
-/* utils.c */
-long	get_current_time(void);
-void	ft_usleep(int msec, t_table *table);
+/* destroy_and_free.c */
 void	destroy_and_free(t_table *table);
 
 /* log_action.c */
@@ -68,8 +68,8 @@ bool	log_action(t_philo *philo, t_time timestamp, char *act_msg);
 
 /* actions.c */
 void	*act(void *philo_ptr);
-void	destroy(pthread_mutex_t *mutexes, size_t n);
 
+/* atomic_operations.c */
 void	atomic_set(pthread_mutex_t *mutex, long *variable, long value);
 long	atomic_get(pthread_mutex_t *mutex, long *variable);
 
@@ -79,19 +79,26 @@ int		wait_for_init_time_is_set(t_philo *philo);
 
 /* time_managment_utils.c */
 int		calculate_action_gap(t_time die, t_time eat, t_time sleep);
+void	ft_usleep(int msec, t_table *table);
+long	get_current_time(void);
 
+/* monitor.c */
 void	*monitoring(void *arg);
 
+/* aux_funcs.c */
 void	ft_putstr_fd(char *s, int fd);
 long	ft_atol(char *str);
 void	*ft_calloc(size_t count, size_t size);
 int		ft_is_space(char c);
 int		ft_isdigit(int d);
 
+/* thread_management.c */
 bool	allocate_threads(t_table *table);
 bool	allocate(t_table *table);
 bool	allocate_mutexes(pthread_mutex_t **mutexes, size_t size);
 bool	allocate_philosophers(t_table *table, size_t size);
 
+/* assign.c */
 void	assign_forks(const t_table *table, t_philo *philo);
+void	destroy(pthread_mutex_t *mutexes, size_t n);
 #endif
